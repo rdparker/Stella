@@ -8,9 +8,9 @@
 //  SS  SS   tt   ee      ll   ll  aa  aa
 //   SSSS     ttt  eeeee llll llll  aaaaa
 //
-// Copyright (c) 1995-2009 by Bradford W. Mott and the Stella team
+// Copyright (c) 1995-2010 by Bradford W. Mott and the Stella Team
 //
-// See the file "license" for information on usage and redistribution of
+// See the file "License.txt" for information on usage and redistribution of
 // this file, and for a DISCLAIMER OF ALL WARRANTIES.
 //
 // $Id$
@@ -116,6 +116,13 @@ class FrameBufferSoft : public FrameBuffer
     bool setVidMode(VideoMode& mode);
 
     /**
+      This method is called to invalidate the contents of the entire
+      framebuffer (ie, mark the current content as invalid, and erase it on
+      the next drawing pass).
+    */
+    void invalidate();
+
+    /**
       This method is called to create a surface compatible with the one
       currently in use, but having the given dimensions.
 
@@ -197,10 +204,9 @@ class FBSurfaceSoft : public FBSurface
     void translateCoords(Int32& x, Int32& y) const;
     void update();
     void free()   { }   // Not required for software mode
-    void reload() { }   // Not required for software mode
+    void reload();
 
   private:
-    void recalc();
     inline void* getBasePtr(uInt32 x, uInt32 y) {
       return static_cast<void *>(static_cast<uInt8*>(mySurface->pixels) +
           (myYOffset + y) * mySurface->pitch + (myXOffset + x) *

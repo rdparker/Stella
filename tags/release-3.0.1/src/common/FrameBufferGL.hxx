@@ -8,9 +8,9 @@
 //  SS  SS   tt   ee      ll   ll  aa  aa
 //   SSSS     ttt  eeeee llll llll  aaaaa
 //
-// Copyright (c) 1995-2009 by Bradford W. Mott and the Stella team
+// Copyright (c) 1995-2010 by Bradford W. Mott and the Stella Team
 //
-// See the file "license" for information on usage and redistribution of
+// See the file "License.txt" for information on usage and redistribution of
 // this file, and for a DISCLAIMER OF ALL WARRANTIES.
 //
 // $Id$
@@ -144,6 +144,13 @@ class FrameBufferGL : public FrameBuffer
       @return  False on any errors (in which case 'mode' is invalid), else true
     */
     bool setVidMode(VideoMode& mode);
+
+    /**
+      This method is called to invalidate the contents of the entire
+      framebuffer (ie, mark the current content as invalid, and erase it on
+      the next drawing pass).
+    */
+    void invalidate();
 
     /**
       This method is called to create a surface compatible with the one

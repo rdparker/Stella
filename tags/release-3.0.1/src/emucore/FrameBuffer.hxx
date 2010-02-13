@@ -8,9 +8,9 @@
 //  SS  SS   tt   ee      ll   ll  aa  aa
 //   SSSS     ttt  eeeee llll llll  aaaaa
 //
-// Copyright (c) 1995-2009 by Bradford W. Mott and the Stella team
+// Copyright (c) 1995-2010 by Bradford W. Mott and the Stella Team
 //
-// See the file "license" for information on usage and redistribution of
+// See the file "License.txt" for information on usage and redistribution of
 // this file, and for a DISCLAIMER OF ALL WARRANTIES.
 //
 // $Id$
@@ -127,10 +127,12 @@ class FrameBuffer
 
       @param message  The message to be shown
       @param position Onscreen position for the message
+      @param force    Force showing this message, even if messages are disabled
       @param color    Color of text in the message
     */
     void showMessage(const string& message,
                      MessagePosition position = kBottomCenter,
+                     bool force = false,
                      uInt32 color = kTextColorHi);
 
     /**
@@ -377,6 +379,13 @@ class FrameBuffer
       @return  False on any errors (in which case 'mode' is invalid), else true
     */
     virtual bool setVidMode(VideoMode& mode) = 0;
+
+    /**
+      This method is called to invalidate the contents of the entire
+      framebuffer (ie, mark the current content as invalid, and erase it on
+      the next drawing pass).
+    */
+    virtual void invalidate() = 0;
 
     /**
       This method is called to create a surface compatible with the one

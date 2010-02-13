@@ -8,9 +8,9 @@
 //  SS  SS   tt   ee      ll   ll  aa  aa
 //   SSSS     ttt  eeeee llll llll  aaaaa
 //
-// Copyright (c) 1995-2009 by Bradford W. Mott and the Stella team
+// Copyright (c) 1995-2010 by Bradford W. Mott and the Stella Team
 //
-// See the file "license" for information on usage and redistribution of
+// See the file "License.txt" for information on usage and redistribution of
 // this file, and for a DISCLAIMER OF ALL WARRANTIES.
 //
 // $Id$
@@ -448,6 +448,12 @@ cerr << "dimensions: " << (fullScreen() ? "(full)" : "") << endl
   p_glClear(GL_COLOR_BUFFER_BIT);
 
   return true;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+void FrameBufferGL::invalidate()
+{
+  // TODO - add code for this
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -8,9 +8,9 @@
 //  SS  SS   tt   ee      ll   ll  aa  aa
 //   SSSS     ttt  eeeee llll llll  aaaaa
 //
-// Copyright (c) 1995-2009 by Bradford W. Mott and the Stella team
+// Copyright (c) 1995-2010 by Bradford W. Mott and the Stella Team
 //
-// See the file "license" for information on usage and redistribution of
+// See the file "License.txt" for information on usage and redistribution of
 // this file, and for a DISCLAIMER OF ALL WARRANTIES.
 //
 // $Id$
@@ -135,7 +135,18 @@ bool FrameBufferSoft::setVidMode(VideoMode& mode)
   // a different sized screen
   myRectList->start();
 
+  // Any previously allocated surfaces have probably changed as well,
+  // so we should refresh them
+  resetSurfaces();
+
   return true;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+void FrameBufferSoft::invalidate()
+{
+  if(myScreen)
+    SDL_FillRect(myScreen, NULL, 0);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -330,7 +341,7 @@ void FrameBufferSoft::drawTIA(bool fullRedraw)
             uInt8 v = currentFrame[bufofs];
             uInt8 w = previousFrame[bufofs];
             uInt8 a, b, c;
-			uInt32 pixel = myAvgPalette[v][w];
+            uInt32 pixel = myAvgPalette[v][w];
             if(SDL_BYTEORDER == SDL_LIL_ENDIAN)
             {
               a = (pixel & myFormat->Bmask) >> myFormat->Bshift;
@@ -527,7 +538,7 @@ FBSurfaceSoft::FBSurfaceSoft(const FrameBufferSoft& buffer, SDL_Surface* surface
     myXOffset(0),
     myYOffset(0)
 {
-  recalc();
+  reload();
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -641,14 +652,14 @@ void FBSurfaceSoft::drawChar(const GUI::Font* font, uInt8 chr,
 
         uInt8* buf_ptr = buffer;
         for(int x = 0; x < bbw; x++, mask >>= 1)
-		{
+        {
           if(ptr & mask)
-		  {
-             *buf_ptr++ = a;  *buf_ptr++ = b;  *buf_ptr++ = c;
+          {
+            *buf_ptr++ = a;  *buf_ptr++ = b;  *buf_ptr++ = c;
           }
           else
             buf_ptr += 3;
-		}
+        }
       }
       break;
     }
@@ -656,7 +667,6 @@ void FBSurfaceSoft::drawChar(const GUI::Font* font, uInt8 chr,
     {
       // Get buffer position where upper-left pixel of the character will be drawn
       uInt32* buffer = (uInt32*)getBasePtr(tx + bbx, ty + desc.ascent - bby - bbh);
-
       for(int y = 0; y < bbh; y++, buffer += myPitch)
       {
         const uInt16 ptr = *tmp++;
@@ -832,7 +842,7 @@ void FBSurfaceSoft::update()
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void FBSurfaceSoft::recalc()
+void FBSurfaceSoft::reload()
 {
   switch(mySurface->format->BytesPerPixel)
   {
