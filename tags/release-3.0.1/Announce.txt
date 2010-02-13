@@ -37,7 +37,7 @@ available.  The distributions currently available are:
 
   * Binary distribution in 64-bit Ubuntu DEB format (stella_3.0.1-1_amd64.deb)
 
-  * Binary distribution in 32-bit RPM format for Linux (stella_3.0.1-1_i386.deb)
+  * Binary distribution in 32-bit RPM format for Linux (stella-3.0.1-2.i386.rpm)
 
   * Binary distribution in 32-bit RPM format for Linux (stella-3.0.1-2.x86_64.rpm)
 
