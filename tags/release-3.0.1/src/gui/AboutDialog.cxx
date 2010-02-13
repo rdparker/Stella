@@ -110,7 +110,7 @@ void AboutDialog::updateStrings(int page, int lines, string& title)
       ADD_ATEXT("\\CA multi-platform Atari 2600 VCS emulator");
       ADD_ATEXT(string("\\C\\c2") + instance().features());
       ADD_ALINE;
-      ADD_ATEXT("\\CCopyright (C) 1995-2009 The Stella team");
+      ADD_ATEXT("\\CCopyright (C) 1995-2010 The Stella team");
       ADD_ATEXT("\\Chttp://stella.sourceforge.net");
       ADD_ALINE;
       ADD_ATEXT("Stella is free software released under the GNU GPL");
